@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Spotify</string>
+    <string name="CLIENT_ID">c0bad14ce3d648058d62799442316075</string>
+    <string name="REDIRECT_URI">com.project.spotify://callback</string>
+    <string name="welcome">Chào buổi chiều</string>
+    <string name="shared_pref_key">Spotify</string>
+    <string name="title_activity_bottom">BottomActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
+</resources>
