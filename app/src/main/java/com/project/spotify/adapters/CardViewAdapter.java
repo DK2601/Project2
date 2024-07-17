@@ -18,10 +18,10 @@ import org.json.JSONObject;
 import java.util.List;
 
 public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHolder> {
-    private List<JSONObject> tracks;
+    private List<JSONObject> albums;
 
-    public CardViewAdapter(List<JSONObject> tracks) {
-        this.tracks = tracks;
+    public CardViewAdapter(List<JSONObject> albums) {
+        this.albums = albums;
     }
 
     @Override
@@ -33,8 +33,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         try {
-            JSONObject track = tracks.get(position);
-            JSONObject album = track.getJSONObject("album");
+            JSONObject album = albums.get(position);
             String albumName = album.getString("name");
             JSONArray images = album.getJSONArray("images");
             String imageUrl = images.getJSONObject(0).getString("url");
@@ -48,7 +47,7 @@ public class CardViewAdapter extends RecyclerView.Adapter<CardViewAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return tracks.size();
+        return albums.size();
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder {

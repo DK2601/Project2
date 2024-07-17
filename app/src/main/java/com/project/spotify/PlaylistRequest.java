@@ -18,8 +18,9 @@ import java.util.Map;
 
 public class PlaylistRequest {
 
-    private static final String PLAYLIST_ENDPOINT = "https://api.spotify.com/v1/me/player/recently-played?limit=4";
-    private static final String USER_ENDPOINT = "https://api.spotify.com/v1/me";
+    private static final String PLAYLIST_ENDPOINT = "https://api.spotify.com/v1/me/top/tracks?limit=6";
+    private static final String ARTIST_ENDPOINT = "https://api.spotify.com/v1/me/top/artists";
+    private static final String USER_PROFILE_ENDPOINT = "https://api.spotify.com/v1/me";
     private RequestQueue requestQueue;
     private SharedPreferences sharedPreferences;
 
@@ -65,11 +66,11 @@ public class PlaylistRequest {
     public void fetchUserProfile(final VolleyCallback callback) {
         String token = sharedPreferences.getString("token", "");
         Log.d("PlaylistRequest", "Token: " + token);
-        Log.d("PlaylistRequest", "URL: " + USER_ENDPOINT);
+        Log.d("PlaylistRequest", "URL: " + USER_PROFILE_ENDPOINT);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
                 Request.Method.GET,
-                USER_ENDPOINT,
+                USER_PROFILE_ENDPOINT,
                 null,
                 new Response.Listener<JSONObject>() {
                     @Override
@@ -81,6 +82,40 @@ public class PlaylistRequest {
                     @Override
                     public void onErrorResponse(VolleyError error) {
                         Log.e("PlaylistRequest", "Error fetching user profile", error);
+                        callback.onError(error);
+                    }
+                }
+        ) {
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> headers = new HashMap<>();
+                headers.put("Authorization", "Bearer " + token);
+                return headers;
+            }
+        };
+
+        requestQueue.add(jsonObjectRequest);
+    }
+
+    public void fetchArtist(final VolleyCallback callback) {
+        String token = sharedPreferences.getString("token", "");
+        Log.d("PlaylistRequest", "Token: " + token);
+        Log.d("PlaylistRequest", "URL: " + ARTIST_ENDPOINT);
+
+        JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
+                Request.Method.GET,
+                ARTIST_ENDPOINT,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        callback.onSuccess(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("PlaylistRequest", "Error fetching artists", error);
                         callback.onError(error);
                     }
                 }
