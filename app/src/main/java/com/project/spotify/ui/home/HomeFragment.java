@@ -1,5 +1,6 @@
 package com.project.spotify.ui.home;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
@@ -16,10 +17,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
+import com.project.spotify.PlaylistActivity;
 import com.project.spotify.PlaylistRequest;
 import com.project.spotify.R;
 import com.project.spotify.adapters.ArtistAdapter;
 import com.project.spotify.adapters.CardViewAdapter;
+import com.project.spotify.adapters.UserPlaylistAdapter;
+import com.project.spotify.entity.Playlist;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -171,5 +175,6 @@ public class HomeFragment extends Fragment {
                 Log.e("HomeFragment", "Error fetching artist", error);
             }
         });
+
     }
 }

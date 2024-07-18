@@ -22,4 +22,9 @@
         android:name="com.project.spotify.ui.notifications.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/navigation_user"
+        android:name="com.project.spotify.ui.user.UserFragment"
+        android:label="User"
+        tools:layout="@layout/fragment_user_profile" />
 </navigation>

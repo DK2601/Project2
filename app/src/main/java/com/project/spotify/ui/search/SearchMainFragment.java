@@ -1,5 +1,6 @@
 package com.project.spotify.ui.search;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,6 +16,8 @@ import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.project.spotify.CategoryRequest;
+import com.project.spotify.PlayBack;
+import com.project.spotify.PlaylistActivity;
 import com.project.spotify.SearchRequest;
 
 
@@ -26,8 +29,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.project.spotify.R;
 import com.project.spotify.adapters.SearchAdapter;
+import com.project.spotify.adapters.UserPlaylistAdapter;
 import com.project.spotify.entity.Album;
 import com.project.spotify.entity.Artist;
+import com.project.spotify.entity.Playlist;
 import com.project.spotify.entity.Track;
 import com.squareup.picasso.Picasso;
 
@@ -41,6 +46,8 @@ import java.util.List;
 public class SearchMainFragment extends Fragment {
     private List<Object> items = new ArrayList<>();
     private SearchAdapter adapter;
+
+
 
 
     @Nullable
@@ -75,6 +82,7 @@ public class SearchMainFragment extends Fragment {
                 searchSpotify(query);
             }
         });
+
     }
 
     private void searchSpotify(String query) {

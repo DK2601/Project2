@@ -14,8 +14,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.navigation.NavController;
+import androidx.navigation.NavOptions;
+import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -28,6 +32,7 @@ import com.project.spotify.adapters.UserPlaylistAdapter;
 import com.project.spotify.databinding.FragmentNotificationsBinding;
 import com.project.spotify.entity.Playlist;
 import com.project.spotify.ui.search.SearchMainFragment;
+import com.project.spotify.ui.user.UserFragment;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -65,6 +70,30 @@ public class NotificationsFragment extends Fragment {
 
         UserPlaylistRequest userPlaylistRequest = new UserPlaylistRequest(requireContext());
 
+
+        EditText searchField = view.findViewById(R.id.editTextSearch);
+
+        profileImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Chuyển sang SearchMainFragment khi click vào EditText
+                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(((ViewGroup) getView().getParent()).getId(), new UserFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
+        //create me a new setOnItemClickListener method for image view profile_image to navigate to user profile fragment
+//        profileImageView = view.findViewById(R.id.profile_image);
+//
+//        NavController navController = Navigation.findNavController(view);
+//        profileImageView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                navController.navigate(R.id.navigation_user, null,
+//                        new NavOptions.Builder().setLaunchSingleTop(true).build());            }
+//        });
 
         playlistAdapter.setOnItemClickListener(new UserPlaylistAdapter.OnItemClickListener() {
             @Override

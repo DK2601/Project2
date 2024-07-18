@@ -1,19 +1,23 @@
 package com.project.spotify.adapters;
 
 import android.content.Context;
+import android.drm.DrmStore;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.project.spotify.PlayBack;
 import com.project.spotify.R;
 import com.project.spotify.entity.Artist;
 import com.project.spotify.entity.Album;
+import com.project.spotify.entity.Playlist;
 import com.project.spotify.entity.Track;
 import com.squareup.picasso.Picasso;
 
@@ -22,6 +26,15 @@ import java.util.List;
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
     private List<Object> items;
     private Context context;
+    private OnItemClickListener listener;
+    private List<PlayBack> playBack;
+    public interface OnItemClickListener {
+        void onItemClick(PlayBack playBack);
+    }
+
+    public void setOnItemClickListener(SearchAdapter.OnItemClickListener listener) {
+        this.listener = listener;
+    }
 
     public SearchAdapter(List<Object> items, Context context) {
         this.items = items;
@@ -72,6 +85,18 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
             nameTextView = itemView.findViewById(R.id.nameTextView);
             typeTextView = itemView.findViewById(R.id.typeTextView);
             imageView = itemView.findViewById(R.id.imageView);
+
+        }
+
+        public void bind(final PlayBack playBack, final SearchAdapter.OnItemClickListener listener) {
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (listener != null) {
+                        listener.onItemClick(playBack);
+                    }
+                }
+            });
         }
     }
 }

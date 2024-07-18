@@ -10,4 +10,6 @@
     <string name="title_notifications">Notifications</string>
     <string name="title_search">Search</string>
     <string name="artist_image" />
+    <string name="title_user">User</string>
+    <string name="title_profile">User</string>
 </resources>

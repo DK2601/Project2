@@ -11,35 +11,45 @@
         android:layout_height="match_parent"
         android:layout_gravity="center_horizontal"
         android:orientation="vertical"
-        android:padding="16dp"
         android:scrollbarFadeDuration="250"
         tools:context=".PlaybackActivity">
 
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="900dp"
+            android:layout_height="50dp">
+            <TextView
+                android:id="@+id/playlist"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:text="33 Mark Vershapten"
+                android:textSize="20dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="350dp"
             android:gravity="center">
             <ImageView
                 android:id="@+id/album_artwork"
-                android:layout_width="800dp"
-                android:layout_height="800dp"
-                android:layout_gravity="center_horizontal"
-                android:marginTop="200dp"
+                android:layout_width="match_parent"
+                android:layout_height="900dp"
                 android:src="@drawable/sample_album_art" />
         </RelativeLayout>
-        <!-- Album Artwork -->
 
 
         <!-- Song Information -->
+
         <TextView
             android:id="@+id/song_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:text="Song Title"
-            android:textSize="30dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Title"
             android:textColor="@color/white"
-            android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+            android:textSize="30dp" />
 
         <TextView
             android:id="@+id/song_artist"
@@ -47,56 +57,54 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:text="Artist"
-            android:textAppearance="@style/TextAppearance.AppCompat.Subhead" />
+            android:textColor="@color/white"
+            android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+            android:textSize="20dp" />
 
         <!-- Progress Bar -->
         <SeekBar
             android:id="@+id/song_progress"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingStart="60dp"
+            android:paddingEnd="60dp"
             android:layout_marginTop="16dp" />
 
         <!-- Playback Controls -->
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="100dp"
             android:layout_marginTop="16dp"
             android:gravity="center"
+            android:layout_gravity="center_horizontal"
             android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/btn_pre"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="36dp"
                 android:contentDescription="TODO"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
-                android:padding="12dp"
+                android:paddingEnd="12dp"
                 android:src="@drawable/ic_pre" />
 
             <ImageButton
                 android:id="@+id/btn_play_pause"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
+                android:layout_marginEnd="36dp"
                 android:contentDescription="TODO"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
-                android:padding="12dp"
+                android:paddingEnd="12dp"
                 android:src="@drawable/ic_play" />
 
             <ImageButton
                 android:id="@+id/btn_next"
-                android:layout_width="48dp"
-                android:layout_height="match_parent"
-                android:layout_gravity="center_horizontal"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:layout_marginStart="16dp"
-                android:layout_marginEnd="16dp"
                 android:contentDescription="TODO"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
                 android:padding="12dp"
                 android:src="@drawable/ic_next" />
         </LinearLayout>
@@ -105,10 +113,12 @@
         <SeekBar
             android:id="@+id/volume_control"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="80dp"
             android:layout_marginTop="16dp"
+            android:paddingStart="60dp"
+            android:paddingEnd="60dp"
             android:max="100"
-            android:progress="50" />
+            android:progress="70" />
 
     </LinearLayout>
 

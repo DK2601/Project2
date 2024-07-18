@@ -1,3 +1,4 @@
 package com.project.spotify.entity;
-public class SearchItem {
+
+public class UserProfile {
 }
