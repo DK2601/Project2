@@ -13,6 +13,7 @@
         android:layout_height="wrap_content"
         app:cardCornerRadius="11dp">
         <EditText
+            android:id="@+id/inputSearch"
             android:hint="Bạn muốn nghe gì?"
             android:paddingStart="16dp"
             android:textColor="@color/white"

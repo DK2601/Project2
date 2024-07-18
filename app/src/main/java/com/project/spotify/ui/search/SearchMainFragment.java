@@ -1,11 +1,14 @@
 package com.project.spotify.ui.search;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -37,6 +40,8 @@ import java.util.List;
 
 public class SearchMainFragment extends Fragment {
     private List<Object> items = new ArrayList<>();
+    private SearchAdapter adapter;
+
 
     @Nullable
     @Override
@@ -50,22 +55,70 @@ public class SearchMainFragment extends Fragment {
         RecyclerView recyclerView = view.findViewById(R.id.listSearch);
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext()));
 
-        SearchRequest searchRequest = new SearchRequest(requireContext());
+        adapter = new SearchAdapter(items, requireContext());
+        recyclerView.setAdapter(adapter);
+        EditText searchEditText = view.findViewById(R.id.inputSearch);
 
-        searchRequest.fetchSearch(new SearchRequest.VolleyCallback() {
+//        searchRequest.fetchSearch(new SearchRequest.VolleyCallback() {
+//            @Override
+//            public void onSuccess(JSONObject response) {
+//                Log.d("SearchFragment", "Search Response: " + response.toString());
+//                try {
+//                    items.addAll(parsePlaylists(response.getJSONObject("playlists").getJSONArray("items")));
+//                    items.addAll(parseArtists(response.getJSONObject("artists").getJSONArray("items")));
+//                    items.addAll(parseTracks(response.getJSONObject("tracks").getJSONArray("items")));
+//                } catch (JSONException e) {
+//                    Log.e("SearchFragment", "Error parsing JSON", e);
+//                }
+//
+//                SearchAdapter adapter = new SearchAdapter(items, requireContext());
+//                recyclerView.setAdapter(adapter);
+//            }
+//
+//            @Override
+//            public void onError(VolleyError error) {
+//                Log.e("SearchFragment", "Error fetching search results", error);
+//            }
+//        });
+
+        searchEditText.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+                String query = editable.toString();
+                searchSpotify(query);
+            }
+        });
+    }
+
+    private void searchSpotify(String query) {
+        SearchRequest searchRequest = new SearchRequest(requireContext());
+        searchRequest.fetchSearch(query, new SearchRequest.VolleyCallback() {
             @Override
             public void onSuccess(JSONObject response) {
                 Log.d("SearchFragment", "Search Response: " + response.toString());
+                items.clear();
                 try {
-                    items.addAll(parsePlaylists(response.getJSONObject("playlists").getJSONArray("items")));
-                    items.addAll(parseArtists(response.getJSONObject("artists").getJSONArray("items")));
-                    items.addAll(parseTracks(response.getJSONObject("tracks").getJSONArray("items")));
+                    // Get arrays of different types
+                    JSONArray playlistItems = response.getJSONObject("playlists").getJSONArray("items");
+                    JSONArray artistItems = response.getJSONObject("artists").getJSONArray("items");
+                    JSONArray trackItems = response.getJSONObject("tracks").getJSONArray("items");
+
+                    // Add items according to the order in which they appear
+                    items.addAll(parseItems(trackItems, "track"));
+                    items.addAll(parseItems(playlistItems, "playlist"));
+                    items.addAll(parseItems(artistItems, "artist"));
                 } catch (JSONException e) {
                     Log.e("SearchFragment", "Error parsing JSON", e);
                 }
-
-                SearchAdapter adapter = new SearchAdapter(items, requireContext());
-                recyclerView.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -75,51 +128,57 @@ public class SearchMainFragment extends Fragment {
         });
     }
 
-    private List<Album> parsePlaylists(JSONArray items) throws JSONException {
-        List<Album> albums = new ArrayList<>();
-        for (int i = 0; i < items.length(); i++) {
-            JSONObject item = items.getJSONObject(i);
-            String name = item.getString("name");
-            String type = item.getString("type");
-            String imageUrl = item.getJSONArray("images").getJSONObject(0).getString("url");
-            String artist = item.getJSONObject("owner").getString("display_name");
-            albums.add(new Album(name, type, imageUrl, artist));
-        }
-        return albums;
-    }
-
-    private List<Artist> parseArtists(JSONArray items) throws JSONException {
-        List<Artist> artists = new ArrayList<>();
-        for (int i = 0; i < items.length(); i++) {
-            JSONObject item = items.getJSONObject(i);
-            String name = item.getString("name");
-            String type = item.getString("type");
-            String imageUrl = item.getJSONArray("images").getJSONObject(0).getString("url");
-            artists.add(new Artist(name, type, imageUrl));
-        }
-        return artists;
-    }
-
-    private List<Track> parseTracks(JSONArray items) throws JSONException {
-        List<Track> tracks = new ArrayList<>();
-        for (int i = 0; i < items.length(); i++) {
-            JSONObject item = items.getJSONObject(i);
-            String name = item.getString("name");
-            String type = item.getString("type");
-            String artistName = item.getJSONArray("artists").getJSONObject(0).getString("name");
-            String imageUrl = null;
-
-            // Lấy imageUrl từ album
-            JSONObject album = item.getJSONObject("album");
-            JSONArray imagesArray = album.getJSONArray("images");
-            if (imagesArray.length() > 0) {
-                imageUrl = imagesArray.getJSONObject(0).getString("url");
+    private List<Object> parseItems(JSONArray itemsArray, String itemType) throws JSONException {
+        List<Object> items = new ArrayList<>();
+        for (int i = 0; i < itemsArray.length(); i++) {
+            JSONObject item = itemsArray.getJSONObject(i);
+            switch (itemType) {
+                case "playlist":
+                    items.add(parsePlaylist(item));
+                    break;
+                case "artist":
+                    items.add(parseArtist(item));
+                    break;
+                case "track":
+                    items.add(parseTrack(item));
+                    break;
             }
-
-            tracks.add(new Track(name, type, artistName, imageUrl));
         }
-        return tracks;
+        return items;
     }
+
+    private Album parsePlaylist(JSONObject item) throws JSONException {
+        String name = item.getString("name");
+        String type = item.getString("type");
+        String imageUrl = item.getJSONArray("images").getJSONObject(0).getString("url");
+        String artist = item.getJSONObject("owner").getString("display_name");
+        return new Album(name, type, imageUrl, artist);
+    }
+
+    private Artist parseArtist(JSONObject item) throws JSONException {
+        String name = item.getString("name");
+        String type = item.getString("type");
+        String imageUrl = item.getJSONArray("images").getJSONObject(0).getString("url");
+        return new Artist(name, type, imageUrl);
+    }
+
+    private Track parseTrack(JSONObject item) throws JSONException {
+        String name = item.getString("name");
+        String type = item.getString("type");
+        String artistName = item.getJSONArray("artists").getJSONObject(0).getString("name");
+        String imageUrl = null;
+
+        // Lấy imageUrl từ album
+        JSONObject album = item.getJSONObject("album");
+        JSONArray imagesArray = album.getJSONArray("images");
+        if (imagesArray.length() > 0) {
+            imageUrl = imagesArray.getJSONObject(0).getString("url");
+        }
+
+        return new Track(name, type, artistName, imageUrl);
+    }
+
+
 
 
 }

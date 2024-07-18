@@ -19,7 +19,7 @@ import java.util.Map;
 public class SearchRequest {
     private RequestQueue requestQueue;
     private SharedPreferences sharedPreferences;
-    private static final String SEARCH_ENDPOINT = "https://api.spotify.com/v1/search?q=33&type=playlist%2Cartist%2Ctrack&market=VN&limit=10";
+    private static final String BASE_SEARCH_ENDPOINT = "https://api.spotify.com/v1/search";
 
     public SearchRequest(Context context) {
         this.requestQueue = Volley.newRequestQueue(context);
@@ -31,28 +31,29 @@ public class SearchRequest {
         void onError(VolleyError error);
     }
 
-    public void fetchSearch(final VolleyCallback callback) {
+    public void fetchSearch(String query, final VolleyCallback callback) {
         String token = sharedPreferences.getString("token", "");
+        String searchUrl = BASE_SEARCH_ENDPOINT + "?q=" + query + "&type=playlist%2Cartist%2Ctrack&market=VN";
         Log.d("SearchRequest", "Token: " + token);
-        Log.d("SearchRequest", "URL: " + SEARCH_ENDPOINT);
+        Log.d("SearchRequest", "URL: " + searchUrl);
 
         JsonObjectRequest jsonObjectRequest = new JsonObjectRequest(
-            Request.Method.GET,
-            SEARCH_ENDPOINT,
-            null,
-            new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject response) {
-                    callback.onSuccess(response);
+                Request.Method.GET,
+                searchUrl,
+                null,
+                new Response.Listener<JSONObject>() {
+                    @Override
+                    public void onResponse(JSONObject response) {
+                        callback.onSuccess(response);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Log.e("SearchRequest", "Error fetching search", error);
+                        callback.onError(error);
+                    }
                 }
-            },
-            new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Log.e("SearchRequest", "Error fetching search", error);
-                    callback.onError(error);
-                }
-            }
         ) {
             @Override
             public Map<String, String> getHeaders() {
@@ -64,6 +65,4 @@ public class SearchRequest {
 
         requestQueue.add(jsonObjectRequest);
     }
-
-
 }
