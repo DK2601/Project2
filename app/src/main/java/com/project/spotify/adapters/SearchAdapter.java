@@ -20,7 +20,7 @@ import com.squareup.picasso.Picasso;
 import java.util.List;
 
 public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder> {
-    private List<Object> items; // This list will contain Album, Artist, and Track objects
+    private List<Object> items;
     private Context context;
 
     public SearchAdapter(List<Object> items, Context context) {
@@ -38,20 +38,22 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Object item = items.get(position);
+
         if (item instanceof Album) {
             Album album = (Album) item;
-            Log.d("SearchAdapter", "Album name: " + album.getName()); // Add this line
-            holder.textView.setText(album.getName() + " - " + album.getArtist());
+            holder.nameTextView.setText(album.getName());
+            holder.typeTextView.setText(album.getType());
             Picasso.get().load(album.getImageUrl()).into(holder.imageView);
         } else if (item instanceof Artist) {
             Artist artist = (Artist) item;
-            Log.d("SearchAdapter", "Artist name: " + artist.getName()); // Add this line
-            holder.textView.setText(artist.getName());
+            holder.nameTextView.setText(artist.getName());
+            holder.typeTextView.setText(artist.getType());
             Picasso.get().load(artist.getImageUrl()).into(holder.imageView);
         } else if (item instanceof Track) {
             Track track = (Track) item;
-            Log.d("SearchAdapter", "Track name: " + track.getName()); // Add this line
-            holder.textView.setText(track.getName() + " - " + track.getArtist());
+            holder.nameTextView.setText(track.getName());
+            holder.typeTextView.setText(track.getType());
+            Picasso.get().load(track.getImageUrl()).into(holder.imageView);
         }
     }
 
@@ -61,12 +63,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.ViewHolder
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        TextView textView;
+        TextView nameTextView;
+        TextView typeTextView;
         ImageView imageView;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-            textView = itemView.findViewById(R.id.textView);
+            nameTextView = itemView.findViewById(R.id.nameTextView);
+            typeTextView = itemView.findViewById(R.id.typeTextView);
             imageView = itemView.findViewById(R.id.imageView);
         }
     }

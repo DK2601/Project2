@@ -19,7 +19,7 @@ import java.util.Map;
 public class SearchRequest {
     private RequestQueue requestQueue;
     private SharedPreferences sharedPreferences;
-    private static final String SEARCH_ENDPOINT = "https://api.spotify.com/v1/search?q=33&type=playlist%2Cartist%2Ctrack&market=VN&limit=1";
+    private static final String SEARCH_ENDPOINT = "https://api.spotify.com/v1/search?q=33&type=playlist%2Cartist%2Ctrack&market=VN&limit=10";
 
     public SearchRequest(Context context) {
         this.requestQueue = Volley.newRequestQueue(context);

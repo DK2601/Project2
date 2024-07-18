@@ -70,7 +70,7 @@ public class SearchMainFragment extends Fragment {
 
             @Override
             public void onError(VolleyError error) {
-
+                Log.e("SearchFragment", "Error fetching search results", error);
             }
         });
     }
@@ -80,9 +80,10 @@ public class SearchMainFragment extends Fragment {
         for (int i = 0; i < items.length(); i++) {
             JSONObject item = items.getJSONObject(i);
             String name = item.getString("name");
+            String type = item.getString("type");
             String imageUrl = item.getJSONArray("images").getJSONObject(0).getString("url");
             String artist = item.getJSONObject("owner").getString("display_name");
-            albums.add(new Album(name, imageUrl, artist));
+            albums.add(new Album(name, type, imageUrl, artist));
         }
         return albums;
     }
@@ -92,8 +93,9 @@ public class SearchMainFragment extends Fragment {
         for (int i = 0; i < items.length(); i++) {
             JSONObject item = items.getJSONObject(i);
             String name = item.getString("name");
+            String type = item.getString("type");
             String imageUrl = item.getJSONArray("images").getJSONObject(0).getString("url");
-            artists.add(new Artist(name, imageUrl));
+            artists.add(new Artist(name, type, imageUrl));
         }
         return artists;
     }
@@ -103,9 +105,21 @@ public class SearchMainFragment extends Fragment {
         for (int i = 0; i < items.length(); i++) {
             JSONObject item = items.getJSONObject(i);
             String name = item.getString("name");
-            String artist = item.getJSONArray("artists").getJSONObject(0).getString("name");
-            tracks.add(new Track(name, artist));
+            String type = item.getString("type");
+            String artistName = item.getJSONArray("artists").getJSONObject(0).getString("name");
+            String imageUrl = null;
+
+            // Lấy imageUrl từ album
+            JSONObject album = item.getJSONObject("album");
+            JSONArray imagesArray = album.getJSONArray("images");
+            if (imagesArray.length() > 0) {
+                imageUrl = imagesArray.getJSONObject(0).getString("url");
+            }
+
+            tracks.add(new Track(name, type, artistName, imageUrl));
         }
         return tracks;
     }
+
+
 }

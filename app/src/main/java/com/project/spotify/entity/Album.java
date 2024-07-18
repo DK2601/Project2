@@ -1,26 +1,31 @@
 package com.project.spotify.entity;
 
-// Step 2: Create a new class `Album`
 public class Album {
     private String name;
-    private String artist;
+    private String type;
     private String imageUrl;
+    private String artist;
 
-    public Album(String name, String artist, String imageUrl) {
+    public Album(String name, String type, String imageUrl, String artist) {
         this.name = name;
-        this.artist = artist;
+        this.type = type;
         this.imageUrl = imageUrl;
+        this.artist = artist;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getArtist() {
-        return artist;
+    public String getType() {
+        return type;
     }
 
     public String getImageUrl() {
         return imageUrl;
+    }
+
+    public String getArtist() {
+        return artist;
     }
 }

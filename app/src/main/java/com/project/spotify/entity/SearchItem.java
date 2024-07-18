@@ -1,2 +1,3 @@
-package com.project.spotify.entity;public class SearchItem {
+package com.project.spotify.entity;
+public class SearchItem {
 }
