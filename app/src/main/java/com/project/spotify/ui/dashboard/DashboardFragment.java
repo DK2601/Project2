@@ -1,11 +1,13 @@
 package com.project.spotify.ui.dashboard;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -16,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.volley.VolleyError;
 import com.project.spotify.CategoryRequest;
+import com.project.spotify.PlaylistActivity;
 import com.project.spotify.R;
 import com.project.spotify.adapters.CategoryAdapter;
 import com.project.spotify.entity.Category;
@@ -39,6 +42,7 @@ public class DashboardFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
 
         EditText searchField = view.findViewById(R.id.editTextSearch);
         searchField.setOnClickListener(new View.OnClickListener() {

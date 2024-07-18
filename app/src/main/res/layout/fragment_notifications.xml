@@ -1,22 +1,139 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".ui.notifications.NotificationsFragment">
+    <RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:padding="16dp"
+        android:id="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/black">
+        <LinearLayout
+            android:id="@+id/top_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="16dp">
 
-    <TextView
-        android:id="@+id/text_notifications"
+            <androidx.cardview.widget.CardView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                app:cardCornerRadius="150dp"
+                android:layout_marginRight="15dp">
+                <ImageView
+                    android:id="@+id/profile_image"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="8dp" />
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/white"
+                android:textSize="22dp"
+                android:textStyle="bold"
+                android:text="Thư viện"/>
+
+
+
+
+        </LinearLayout>
+        <HorizontalScrollView
+            android:id="@+id/sub_top_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/top_bar">
+            <LinearLayout
+                android:id="@+id/item_top_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                >
+                <TextView
+                    android:id="@+id/filter_all"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:background="@drawable/border_button_2"
+                    android:backgroundTint="#202020"
+                    android:gravity="center"
+                    android:text="Tất cả"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/filter_music"
+                    android:layout_width="80dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:backgroundTint="#202020"
+                    android:text="Nhạc"
+                    android:background="@drawable/border_button_2"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:layout_marginStart="16dp"
+                    android:layout_gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/filter_podcasts"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:backgroundTint="#202020"
+                    android:background="@drawable/border_button_2"
+                    android:text="Podcasts"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:layout_marginStart="16dp"
+                    android:layout_gravity="center_vertical" />
+                <TextView
+                    android:id="@+id/filter_artist"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:backgroundTint="#202020"
+                    android:background="@drawable/border_button_2"
+                    android:text="Artist"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:layout_marginStart="16dp"
+                    android:layout_gravity="center_vertical" />
+                <TextView
+                    android:id="@+id/filter_downloaded"
+                    android:layout_width="100dp"
+                    android:layout_height="30dp"
+                    android:gravity="center"
+                    android:backgroundTint="#202020"
+                    android:background="@drawable/border_button_2"
+                    android:text="Downloaded"
+                    android:textColor="@color/white"
+                    android:textSize="16sp"
+                    android:layout_marginStart="16dp"
+                    android:layout_gravity="center_vertical" />
+            </LinearLayout>
+
+        </HorizontalScrollView>
+        <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:text="Gần đây"
+        android:textColor="@color/white"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="10dp"
+        android:paddingTop="3dp"
+        android:textSize="15sp"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/sub_top_bar"/>
+        <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_below="@+id/title"
+            android:clipToPadding="false"
+            android:paddingBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:orientation="horizontal"/>
+
+    </RelativeLayout>
+

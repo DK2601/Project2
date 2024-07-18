@@ -59,27 +59,6 @@ public class SearchMainFragment extends Fragment {
         recyclerView.setAdapter(adapter);
         EditText searchEditText = view.findViewById(R.id.inputSearch);
 
-//        searchRequest.fetchSearch(new SearchRequest.VolleyCallback() {
-//            @Override
-//            public void onSuccess(JSONObject response) {
-//                Log.d("SearchFragment", "Search Response: " + response.toString());
-//                try {
-//                    items.addAll(parsePlaylists(response.getJSONObject("playlists").getJSONArray("items")));
-//                    items.addAll(parseArtists(response.getJSONObject("artists").getJSONArray("items")));
-//                    items.addAll(parseTracks(response.getJSONObject("tracks").getJSONArray("items")));
-//                } catch (JSONException e) {
-//                    Log.e("SearchFragment", "Error parsing JSON", e);
-//                }
-//
-//                SearchAdapter adapter = new SearchAdapter(items, requireContext());
-//                recyclerView.setAdapter(adapter);
-//            }
-//
-//            @Override
-//            public void onError(VolleyError error) {
-//                Log.e("SearchFragment", "Error fetching search results", error);
-//            }
-//        });
 
         searchEditText.addTextChangedListener(new TextWatcher() {
             @Override
