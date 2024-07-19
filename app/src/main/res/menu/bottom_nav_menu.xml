@@ -19,6 +19,14 @@
         android:id="@+id/navigation_playback"
         android:icon="@drawable/ic_notifications_black_24dp"
         android:title="@string/title_play" />
+<!--    <item-->
+<!--        android:id="@+id/navigation_artist"-->
+<!--        android:icon="@drawable/ic_notifications_black_24dp"-->
+<!--        android:title="@string/title_user" />-->
+<!--    <item-->
+<!--        android:id="@+id/navigation_album"-->
+<!--        android:icon="@drawable/ic_notifications_black_24dp"-->
+<!--        android:title="@string/album_image" />-->
 
 
 </menu>

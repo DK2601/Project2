@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/black">
+
+    <!-- Header Section -->
+    <LinearLayout
+        android:id="@+id/header_section"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="0dp">
+
+        <ImageView
+            android:id="@+id/artist_image"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/sample_artist" />
+
+        <TextView
+            android:id="@+id/artist_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="-45dp"
+            android:layout_marginLeft="15dp"
+            android:text="GREY D"
+            android:textSize="24sp"
+            android:textColor="@android:color/white"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/artist_followers"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:layout_marginLeft="15dp"
+            android:textColor="@color/white"
+            android:text="1,5Tr người nghe hàng tháng"
+            android:textSize="16sp" />
+
+
+
+    </LinearLayout>
+
+    <!-- Play Button -->
+
+    <!-- Songs List -->
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="10dp"
+
+        app:srcCompat="@drawable/ic_back" />
+    <ImageView
+        android:id="@+id/imageView11"
+        android:layout_width="39dp"
+        android:layout_height="55dp"
+        android:layout_below="@id/header_section"
+        android:layout_marginLeft="15dp"
+        android:src="@drawable/album_cover" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="110dp"
+        android:layout_height="40dp"
+        android:layout_below="@id/header_section"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="5dp"
+        android:text="Theo dõi" />
+
+    <ImageView
+        android:id="@+id/imageView12"
+        android:layout_width="51dp"
+        android:layout_height="13dp"
+        android:layout_below="@id/imageView11"
+        android:layout_marginTop="-34dp"
+        android:layout_marginLeft="180dp"
+        app:srcCompat="@drawable/three_dots" />
+
+    <ImageView
+        android:id="@+id/imageView13"
+        android:layout_width="41dp"
+        android:layout_height="30dp"
+        android:layout_below="@id/imageView11"
+        android:layout_marginTop="-45dp"
+        android:layout_marginLeft="290dp"
+        app:srcCompat="@drawable/replay" />
+
+    <ImageView
+        android:id="@+id/imageView14"
+        android:layout_width="55dp"
+        android:layout_height="49dp"
+        android:layout_below="@id/imageView11"
+        android:layout_marginTop="-55dp"
+        android:layout_marginLeft="350dp"
+        app:srcCompat="@drawable/play" />
+
+    <ImageView
+        android:id="@+id/imageView15"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_below="@id/imageView11"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="15dp"
+        android:src="@drawable/sample_artist" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView11"
+        android:layout_marginTop="40dp"
+        android:layout_marginLeft="60dp"
+        android:text="3 bài hát - 1 bản phát hành - GREY D" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft="60dp"
+        android:layout_below="@id/imageView11"
+        android:text="Nội dung bạn thích" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="99dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/imageView15"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="21dp"
+        android:text="Phổ biến"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view_body"
+        android:layout_width="match_parent"
+        android:layout_height="259dp"
+        android:layout_below="@id/imageView11"
+        android:layout_marginTop="103dp"
+        android:layout_marginBottom="4dp"
+        android:padding="16dp" />
+
+
+</RelativeLayout>

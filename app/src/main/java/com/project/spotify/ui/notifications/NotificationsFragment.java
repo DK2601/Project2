@@ -31,6 +31,8 @@ import com.project.spotify.UserPlaylistRequest;
 import com.project.spotify.adapters.UserPlaylistAdapter;
 import com.project.spotify.databinding.FragmentNotificationsBinding;
 import com.project.spotify.entity.Playlist;
+import com.project.spotify.ui.album.AlbumFragment;
+import com.project.spotify.ui.artist.ArtistFragment;
 import com.project.spotify.ui.search.SearchMainFragment;
 import com.project.spotify.ui.user.UserFragment;
 import com.squareup.picasso.Picasso;
@@ -67,6 +69,12 @@ public class NotificationsFragment extends Fragment {
         recyclerView.setAdapter(playlistAdapter);
         profileImageView = view.findViewById(R.id.profile_image);
 
+        TextView filterArtist = view.findViewById(R.id.filter_artist);
+        TextView filterAlbum = view.findViewById(R.id.filter_downloaded); // Assuming this is the intended TextView for navigating to AlbumFragment
+
+
+
+
 
         UserPlaylistRequest userPlaylistRequest = new UserPlaylistRequest(requireContext());
 
@@ -79,6 +87,28 @@ public class NotificationsFragment extends Fragment {
                 // Chuyển sang SearchMainFragment khi click vào EditText
                 FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
                 transaction.replace(((ViewGroup) getView().getParent()).getId(), new UserFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
+        filterArtist.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Chuyển sang SearchMainFragment khi click vào EditText
+                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(((ViewGroup) getView().getParent()).getId(), new ArtistFragment());
+                transaction.addToBackStack(null);
+                transaction.commit();
+            }
+        });
+
+        filterAlbum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Chuyển sang SearchMainFragment khi click vào EditText
+                FragmentTransaction transaction = requireActivity().getSupportFragmentManager().beginTransaction();
+                transaction.replace(((ViewGroup) getView().getParent()).getId(), new AlbumFragment());
                 transaction.addToBackStack(null);
                 transaction.commit();
             }

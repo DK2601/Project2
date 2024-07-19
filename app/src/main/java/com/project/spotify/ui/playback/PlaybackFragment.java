@@ -23,6 +23,7 @@ import com.bumptech.glide.Glide;
 import com.project.spotify.R;
 import com.project.spotify.Song;
 import com.project.spotify.PlaybackRequest;
+import com.project.spotify.adapters.GlobalMediaPlayer;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -125,7 +126,24 @@ public class PlaybackFragment extends Fragment {
                     btnPlayPause.setImageResource(R.drawable.ic_launcher_foreground); // Update to pause icon
                 }
             }
-        });    }
+
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        GlobalMediaPlayer globalMediaPlayer = GlobalMediaPlayer.getInstance();
+        if (globalMediaPlayer.isPlaying()) {
+            // Update the play/pause button to show the pause icon
+            btnPlayPause.setImageResource(R.drawable.ic_launcher_foreground); // Adjust drawable ID as needed
+            // Update the song progress
+            songProgress.setProgress(globalMediaPlayer.getCurrentPosition());
+        } else {
+            // Update the play/pause button to show the play icon
+            btnPlayPause.setImageResource(R.drawable.ic_play_foreground); // Adjust drawable ID as needed
+        }
+    }
 
     private void initializeViews(View view) {
         btnNext = view.findViewById(R.id.btn_next);

@@ -32,4 +32,14 @@
         android:name="com.project.spotify.ui.playback.PlaybackFragment"
         android:label="User"
         tools:layout="@layout/fragment_playback" />
+    <fragment
+        android:id="@+id/navigation_album"
+        android:name="com.project.spotify.ui.album.AlbumFragment"
+        android:label="User"
+        tools:layout="@layout/activity_album" />
+    <fragment
+        android:id="@+id/navigation_artist"
+        android:name="com.project.spotify.ui.artist.ArtistFragment"
+        android:label="User"
+        tools:layout="@layout/activity_artist" />
 </navigation>

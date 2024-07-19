@@ -135,6 +135,7 @@ public class SearchMainFragment extends Fragment {
     }
 
     private Album parsePlaylist(JSONObject item) throws JSONException {
+        String id = item.getString("id"); // Get the track ID
         String name = item.getString("name");
         String type = item.getString("type");
         String imageUrl = item.getJSONArray("images").getJSONObject(0).getString("url");
