@@ -77,7 +77,6 @@ public class LoginActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == REQUEST_CODE) {
             AuthorizationResponse response = AuthorizationClient.getResponse(resultCode, data);
-
             switch (response.getType()) {
                 case TOKEN:
                     editor = getSharedPreferences(getString(R.string.shared_pref_key), MODE_PRIVATE).edit();

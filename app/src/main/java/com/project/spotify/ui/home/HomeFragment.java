@@ -81,6 +81,7 @@ public class HomeFragment extends Fragment {
         artistIds = new HashSet<>();
         artistAdapter = new ArtistAdapter(artistItems);
         recyclerViewArtist.setAdapter(artistAdapter);
+
         // Hiển thị token
         sharedPreferences = requireActivity().getSharedPreferences(getString(R.string.shared_pref_key), requireContext().MODE_PRIVATE);
         String token = sharedPreferences.getString("token", "No token found");

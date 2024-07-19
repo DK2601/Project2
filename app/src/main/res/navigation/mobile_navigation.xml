@@ -27,4 +27,9 @@
         android:name="com.project.spotify.ui.user.UserFragment"
         android:label="User"
         tools:layout="@layout/fragment_user_profile" />
+    <fragment
+        android:id="@+id/navigation_playback"
+        android:name="com.project.spotify.ui.playback.PlaybackFragment"
+        android:label="User"
+        tools:layout="@layout/fragment_playback" />
 </navigation>
