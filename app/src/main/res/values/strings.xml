@@ -6,9 +6,10 @@
     <string name="shared_pref_key">Spotify</string>
     <string name="title_activity_bottom">BottomActivity</string>
     <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_dashboard">Search</string>
+    <string name="title_notifications">Library</string>
     <string name="title_search">Search</string>
+    <string name="title_play">Playback</string>
     <string name="artist_image" />
     <string name="title_user">User</string>
     <string name="title_profile">User</string>

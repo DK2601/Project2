@@ -1,6 +1,7 @@
 package com.project.spotify.ui.playback;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Handler;
@@ -42,6 +43,7 @@ public class PlaybackFragment extends Fragment {
     private TextView tvName, tvNameGroup;
     private SeekBar songProgress, volumeControl;
     private AudioManager audioManager;
+    private String previewUrl;
 
 
 
@@ -94,7 +96,7 @@ public class PlaybackFragment extends Fragment {
                     // Now you have the artist name, you can proceed with other data extraction
                     String songName = playbackInfo.getString("name");
                     String imageUrl = playbackInfo.getJSONObject("album").getJSONArray("images").getJSONObject(0).getString("url");
-                    String previewUrl = playbackInfo.getString("preview_url"); // Extract preview_url
+                    previewUrl = playbackInfo.getString("preview_url"); // Extract preview_url
 
                     tvName.setText(songName);
                     tvNameGroup.setText(artistName);
@@ -102,13 +104,28 @@ public class PlaybackFragment extends Fragment {
 
                     TextView playlistTextView = getView().findViewById(R.id.playlist);
                     playlistTextView.setText(playlist); // Set the text to the TextView
-                    playSong(previewUrl);
                 }
             }
         } catch (JSONException e) {
             Log.e("PlaybackFragment", "Error parsing playback info", e);
         }
-    }
+
+        btnPlayPause.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mediaPlayer == null) {
+                    // Initialize mediaPlayer and play the song
+                    playSong(previewUrl); // Assuming playSong is your method to play a song
+                    btnPlayPause.setImageResource(R.drawable.ic_launcher_foreground); // Update to pause icon
+                } else if (mediaPlayer.isPlaying()) {
+                    mediaPlayer.pause(); // Pause the currently playing track
+                    btnPlayPause.setImageResource(R.drawable.ic_play_foreground); // Update to play icon
+                } else {
+                    mediaPlayer.start(); // Resume the song from the last pause position
+                    btnPlayPause.setImageResource(R.drawable.ic_launcher_foreground); // Update to pause icon
+                }
+            }
+        });    }
 
     private void initializeViews(View view) {
         btnNext = view.findViewById(R.id.btn_next);
@@ -242,9 +259,18 @@ public class PlaybackFragment extends Fragment {
     }
 
     private void playSong(String url) {
+        // Check if mediaPlayer is already playing a track
         if (mediaPlayer != null) {
-            mediaPlayer.release();
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop(); // Stop the currently playing track
+                mediaPlayer.release(); // Release resources
+                mediaPlayer = null; // Set mediaPlayer to null
+            } else {
+                mediaPlayer.release(); // If not playing, just release resources
+                mediaPlayer = null; // Set mediaPlayer to null
+            }
         }
+        // Initialize mediaPlayer for the new track
         mediaPlayer = new MediaPlayer();
         try {
             mediaPlayer.setDataSource(url);
@@ -252,7 +278,7 @@ public class PlaybackFragment extends Fragment {
             mediaPlayer.setOnPreparedListener(new MediaPlayer.OnPreparedListener() {
                 @Override
                 public void onPrepared(MediaPlayer mp) {
-                    mp.start();
+                    mp.start(); // Start playback
                     int duration = mp.getDuration(); // Get the duration of the audio
                     songProgress.setMax(duration); // Set the maximum value of the SeekBar
                     updateTime(); // Start updating the SeekBar progress
@@ -260,6 +286,31 @@ public class PlaybackFragment extends Fragment {
             });
         } catch (Exception e) {
             Log.e("PlaybackFragment", "Error playing song", e);
+        }
+    }
+
+    private void savePlaybackState(boolean isPlaying, String trackUrl) {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getString(R.string.shared_pref_key), Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putBoolean("isPlaying", isPlaying);
+        editor.putString("trackUrl", trackUrl);
+        editor.apply();
+    }
+
+    private PlaybackState getSavedPlaybackState() {
+        SharedPreferences sharedPreferences = getActivity().getSharedPreferences(getString(R.string.shared_pref_key), Context.MODE_PRIVATE);
+        boolean isPlaying = sharedPreferences.getBoolean("isPlaying", false);
+        String trackUrl = sharedPreferences.getString("trackUrl", "");
+        return new PlaybackState(isPlaying, trackUrl);
+    }
+
+    private static class PlaybackState {
+        boolean isPlaying;
+        String trackUrl;
+
+        PlaybackState(boolean isPlaying, String trackUrl) {
+            this.isPlaying = isPlaying;
+            this.trackUrl = trackUrl;
         }
     }
 
